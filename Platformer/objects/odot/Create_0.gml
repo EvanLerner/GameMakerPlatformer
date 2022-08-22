@@ -2,4 +2,6 @@
 // You can write your code in this editor
 
 
-inWall = false;
+
+toppixelinwall = false;
+bottompixelinwall = false;

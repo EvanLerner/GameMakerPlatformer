@@ -1,10 +1,15 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-x = oPlayer.x + sprite_get_width(sPlayer)* .3* oPlayer.image_xscale
-y = oPlayer.y - sprite_get_height(sPlayer)*.5
+x = oPlayer.x + sprite_get_width(sPlayer)* .5* oPlayer.image_xscale
+y = oPlayer.y - sprite_get_height(sPlayer)*.4
 
-if(place_meeting(x,y,oWall)){
-	inWall = true;
-}
-else inWall = false;
+//get the bottom and top pixels of the sprite
+bottompixely = y+sprite_get_height(sDot)/2;
+toppixely = y-sprite_get_height(sDot)/2;
+
+if place_meeting(oDot.x, oDot.toppixely, oWall) toppixelinwall = true;
+else toppixelinwall = false;
+if place_meeting(oDot.x, oDot.bottompixely, oWall) bottompixelinwall = true;
+else bottompixelinwall = false;
+
