@@ -3,4 +3,4 @@
 
 
 
-game_end();
+room_goto(Menu);

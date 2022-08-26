@@ -1,2 +1,2 @@
 
-onscreenprint("image angle = ", oGun.image_angle);
+//onscreenprint("image angle = ", oGun.image_angle);
