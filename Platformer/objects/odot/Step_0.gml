@@ -8,8 +8,7 @@ y = oPlayer.y - sprite_get_height(sPlayer)*.4
 bottompixely = y+sprite_get_height(sDot)/2;
 toppixely = y-sprite_get_height(sDot)/2;
 
-if place_meeting(oDot.x, oDot.toppixely, oWall) toppixelinwall = true;
-else toppixelinwall = false;
-if place_meeting(oDot.x, oDot.bottompixely, oWall) bottompixelinwall = true;
-else bottompixelinwall = false;
+toppixelinwall = place_meeting(oDot.x, oDot.toppixely, oWall);
+
+bottompixelinwall = place_meeting(oDot.x, oDot.bottompixely, oWall);
 

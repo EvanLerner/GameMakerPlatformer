@@ -1,2 +1,1 @@
-instance_destroy();
-
+bounceOffWall(other, self);

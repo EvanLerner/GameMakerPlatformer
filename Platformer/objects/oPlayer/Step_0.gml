@@ -1,21 +1,21 @@
 //check if left or right key is being held
-key_left = keyboard_check(vk_left);
-key_right = keyboard_check(vk_right);
+key_left = keyboard_check(ord("A"));
+key_right = keyboard_check(ord("D"));
+
+//drop key
+key_down = keyboard_check(ord("S"));
 
 //check for running
 key_shift = keyboard_check(vk_shift);
 
 //checks for if space was pressed that frame (being held is ignored)
-key_jump = keyboard_check_pressed(vk_up);
+key_jump = keyboard_check_pressed(ord("W"));
 
 var move = key_right - key_left;
 
-//locks inputed movement
-if(mvtLocked){
-	move = image_xscale;	
-}
-mvtLocked = max(mvtLocked-1,0)
-
+//locks ledgegrab
+ledgegrabLock = max(ledgegrabLock-1,0)
+ledgegrabLock--;
 
 //movement speed
 if(key_shift){
@@ -27,11 +27,13 @@ else{
 vsp = vsp + grv;
 
 //flip sprite based on direction
-if(hsp > 0){
-	image_xscale = 1;	
-}
-else if(hsp < 0){
-	image_xscale = -1;	
+if(!handvLock){
+	if(hsp > 0){
+		image_xscale = 1;	
+	}
+	else if(hsp < 0){
+		image_xscale = -1;	
+	}
 }
 
 //collision check
@@ -44,7 +46,7 @@ if((key_jump)){
 }
 
 //ledgegrab
-if(!oDot.toppixelinwall && oDot.bottompixelinwall && vsp > -5){
+if(!oDot.toppixelinwall && oDot.bottompixelinwall && !ledgegrabLock){
 	if(place_meeting(x + 10*image_xscale, y, oWall)){
 		var wallToGrab = instance_place(x + 10*image_xscale, y, oWall);
 		x = wallToGrab.x - image_xscale * sprite_get_width(sWall)*.66
@@ -62,7 +64,6 @@ if(runningintowall && !handvLock){
 			x = x + sign(hsp);
 	}
 	hsp = 0;
-
 }
 
 //vertical collision
@@ -73,14 +74,28 @@ if(place_meeting(x,y+vsp,oWall)){
 	vsp = 0;
 }
 
+//corner glitch fix
+//without this he gets stuck when he falls right on a corner of a wall...
+if(position_meeting(bbox_right-image_xscale, bbox_bottom-1, oWall)){
+	y--;
+	vsp = 0;
+}
 
-//locks horizontal and vertical movement, releases with jump
+
+//locks horizontal and vertical movement, releases with jump or down
 if(handvLock){
 	hsp = 0;
 	vsp = 0;
 	if(key_jump){
 		vsp = jumpheight;
 		handvLock = false;
+		ledgegrabLock = 10;
+	}
+	if(key_down){
+		vsp += grv*5
+		handvLock = false;
+		ledgegrabLock = 20;
+		
 	}
 }
 
@@ -99,6 +114,7 @@ if(!place_meeting(x,y+1,oWall)){
 		if(vsp > 1) image_index = 1;
 		else image_index = 0;
 }
+
 //running animation
 else if(abs(hsp) > 0){
 	image_speed = 1;

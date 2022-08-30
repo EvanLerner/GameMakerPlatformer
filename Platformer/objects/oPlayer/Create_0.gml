@@ -8,3 +8,4 @@ mvtLocked = 0;
 onWall = false;
 onGround = false;
 handvLock = false;
+ledgegrabLock = 10;
