@@ -4,5 +4,8 @@ if(earlyCollision > 0){
 	}
 earlyCollision--;
 }
-x = x + image_xscale * lengthdir_x(bulletSpeed, image_angle);
-y = y + image_xscale * lengthdir_y(bulletSpeed, image_angle);
+hsp = image_xscale * lengthdir_x(bulletSpeed, image_angle);
+vsp = image_xscale * lengthdir_y(bulletSpeed, image_angle);
+x = x + hsp;
+y = y + vsp;
+
